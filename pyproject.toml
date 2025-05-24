@@ -1,5 +1,5 @@
 [project]
-name = "omni-query-tool"
+name = "omni-fastmcp"
 version = "0.1.0"
 dependencies = ["fastmcp", "requests"]
 

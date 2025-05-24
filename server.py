@@ -7,26 +7,26 @@ OMNI_WEBHOOK_URL = (
 )
 DEFAULT_TOPIC = "associate_agent_metrics_hourly"
 
+mcp = FastMCP("Omni Query Server")
+
+
+@mcp.tool()
+def query_omni(prompt: str, topic: str = DEFAULT_TOPIC) -> dict:
+    """Calls the Omni webhook with the user prompt and topic."""
+    payload = {"prompt": prompt, "topic": topic}
+    try:
+        response = requests.post(
+            OMNI_WEBHOOK_URL,
+            headers={"Content-Type": "application/json"},
+            json=payload,
+            timeout=30,
+        )
+        response.raise_for_status()
+        return response.json()
+    except requests.RequestException as e:
+        return {"error": str(e)}
+
 
 def main():
-    mcp = FastMCP("Omni Query Server")
-
-    @mcp.tool()
-    def query_omni(prompt: str, topic: str = DEFAULT_TOPIC) -> dict:
-        """
-        Calls the Omni with the user prompt and topic to retrieve SQL results.
-        """
-        payload = {"prompt": prompt, "topic": topic}
-        try:
-            response = requests.post(
-                OMNI_WEBHOOK_URL,
-                headers={"Content-Type": "application/json"},
-                json=payload,
-                timeout=30,
-            )
-            response.raise_for_status()
-            return response.json()
-        except requests.RequestException as e:
-            return {"error": str(e)}
-
-    mcp.run()
+    # use transport='stdio' explicitly for uvx
+    mcp.run(transport="stdio")
