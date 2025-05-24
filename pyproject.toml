@@ -1,0 +1,7 @@
+[project]
+name = "omni-query-tool"
+version = "0.1.0"
+dependencies = ["fastmcp", "requests"]
+
+[project.scripts]
+omni-query-tool = "server:main"
