@@ -14,7 +14,7 @@ def main():
     @mcp.tool()
     def query_omni(prompt: str, topic: str = DEFAULT_TOPIC) -> dict:
         """
-        Calls the Omni webhook with the user prompt and topic to retrieve SQL results.
+        Calls the Omni with the user prompt and topic to retrieve SQL results.
         """
         payload = {"prompt": prompt, "topic": topic}
         try:

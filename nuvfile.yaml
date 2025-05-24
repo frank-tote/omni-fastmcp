@@ -1,8 +1,0 @@
-name: omni-query-tool
-description: Query omni using FastMCP and N8N and natural language
-
-scripts:
-  default:
-    desc: Run the Omni Query Server
-    run: |
-      python3 server.py
