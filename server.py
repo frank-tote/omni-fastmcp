@@ -5,7 +5,7 @@ from fastmcp import FastMCP
 mcp = FastMCP("Omni Query Server")
 
 OMNI_WEBHOOK_URL = (
-    "http://34.82.151.95/:5678/webhook/06618753-8762-4e89-8f7b-2c9cafdf23a8"
+    "http://34.82.151.95:5678/webhook/06618753-8762-4e89-8f7b-2c9cafdf23a8"
 )
 DEFAULT_TOPIC = "associate_agent_metrics_hourly"
 
