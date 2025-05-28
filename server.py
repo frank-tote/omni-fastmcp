@@ -2,31 +2,28 @@ import requests
 
 from fastmcp import FastMCP
 
-mcp = FastMCP("Omni Query Server")
+mcp = FastMCP("Analytic Agent Server")
 
-OMNI_WEBHOOK_URL = (
-    "http://34.82.151.95:5678/webhook/06618753-8762-4e89-8f7b-2c9cafdf23a8"
+ANALYTIC_AGENT_WEBHOOK_URL = (
+    "http://34.82.151.95:5678/webhook/fed2373f-0c65-41c5-8e0a-b2bc9b7f6af9/chat"
 )
-DEFAULT_TOPIC = "associate_agent_metrics_hourly"
 
 
 @mcp.tool()
-def query_omni(prompt: str, topic: str = DEFAULT_TOPIC) -> dict:
+def analytic_agent(prompt: str) -> dict:
     """
-    Calls the Omni webhook with the user prompt and topic to retrieve SQL results.
+    Calls the Analytic Agent webhook with the user prompt. The agent determines the topic and returns the result.
     """
-    # Format the body based on Omni's requirements
-    payload = {"prompt": prompt, "topic": topic}
-
+    payload = {"prompt": prompt}
     try:
         response = requests.post(
-            OMNI_WEBHOOK_URL,
+            ANALYTIC_AGENT_WEBHOOK_URL,
             headers={"Content-Type": "application/json"},
             json=payload,
-            timeout=30,
+            timeout=50,
         )
         response.raise_for_status()
-        return response.json()  # Send JSON back to the LLM
+        return response.json()
     except requests.RequestException as e:
         return {"error": str(e)}
 
